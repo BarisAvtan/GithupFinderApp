@@ -4,7 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NavLinksTest from './Components/NavLinksTest'
 import Test from './Components/Test'
+
+
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -30,6 +33,16 @@ root.render(
               element={<Test />}
             ></Route>
           </Routes>
+
+          <Routes>
+            <Route path="/" element={<Navigate to="/NavLinksTest" />} />
+            <Route
+              exact
+              path="/NavLinksTest"
+              element={<NavLinksTest />}
+            ></Route>
+          </Routes>
+
         </BrowserRouter>
       </>
 
