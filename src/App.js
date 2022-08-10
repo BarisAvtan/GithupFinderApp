@@ -18,7 +18,7 @@ export class App extends Component {
       users: [],
       alert: null,
     };
- 02 }
+}
 
   // componentDidMount() {
   //   // axios

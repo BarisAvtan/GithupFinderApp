@@ -4,11 +4,35 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Test from './Components/Test'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+
+      <>
+        <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Navigate to="/App" />} />
+            <Route
+              exact
+              path="/App"
+              element={<App />}
+            ></Route>
+          </Routes>
+
+          <Routes>
+            <Route path="/" element={<Navigate to="/Test" />} />
+            <Route
+              exact
+              path="/Test"
+              element={<Test />}
+            ></Route>
+          </Routes>
+        </BrowserRouter>
+      </>
+
   </React.StrictMode>
 );
 
