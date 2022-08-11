@@ -5,7 +5,10 @@ import React, { Component, Fragment } from "react";
 import Users from "./Components/Users";
 import axios from "axios";
 import Search from "./Components/Search";
-import Alert from './Components/Alert'
+import Alert from "./Components/Alert";
+import About from "./Components/About";
+
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 export class App extends Component {
   constructor(props) {
@@ -18,7 +21,7 @@ export class App extends Component {
       users: [],
       alert: null,
     };
-}
+  }
 
   // componentDidMount() {
   //   // axios
@@ -32,6 +35,8 @@ export class App extends Component {
   //       .then((res) => this.setState({ users: res.data, loading: false }));
   //   }, 3000);
   // }
+
+
   searchUsers(keyword) {
     this.setState({ loading: true });
     setTimeout(() => {
@@ -49,24 +54,89 @@ export class App extends Component {
 
   setAlert(msg, type) {
     this.setState({ alert: { msg, type } });
-    setTimeout(() => { //3 sn sonra alert içini boşaltmak için
+    setTimeout(() => {
+      //3 sn sonra alert içini boşaltmak için
       this.setState({ alert: null });
-  }, 3000);
+    }, 3000);
   }
 
   render() {
     return (
+    
+        // <BrowserRouter>
+        //    <Navbar />
+        //   <Routes>
+        //     {/* <Route path="/" element={<Navigate to="/About" />} /> */}
+        //     {/* <Route exact path="/About" element={<About />}></Route> */}
+        //     <Route
+        //       exact
+        //       path="/Test"
+        //       render={(props) => (
+        //         <>
+        //           <Search
+        //             searchUsers={this.searchUsers}
+        //             clearUsers={this.clearUsers}
+        //             showClearButton={this.state.users.length > 0 ? true : false}
+        //             setAlert={this.setAlert}
+        //           />
+        //           <Users
+        //             users={this.state.users}
+        //             loading={this.state.loading}
+        //           />
+        //         </>
+        //       )}
+        //     />
+        //   </Routes>
+        // </BrowserRouter>
+
+
+      //   <BrowserRouter>
+      //    <Navbar />
+      //   <Route exact path="/" render={ props=> (
+      //                   <>
+      //                       <Search
+      //                           searchUsers={this.searchUsers}
+      //                           clearUsers={this.clearUsers}
+      //                           showClearButton = {this.state.users.length > 0? true:false}
+      //                           setAlert={this.setAlert}
+      //                           />
+      //                       <Users users={this.state.users} loading={this.state.loading}/>
+      //                   </>
+      //               )
+      //           } />
+      //           <Route path="/about" component={About} />
+      // </BrowserRouter>
+
+      //     <BrowserRouter>
+      //     <Navbar />
+      //     <Alert alert= {this.state.alert}/>
+      //     <Switch>
+      //             <Route exact path="/" render={ props=> (
+      //                     <>
+      //                         <Search
+      //                             searchUsers={this.searchUsers}
+      //                             clearUsers={this.clearUsers}
+      //                             showClearButton = {this.state.users.length > 0? true:false}
+      //                             setAlert={this.setAlert}
+      //                             />
+      //                         <Users users={this.state.users} loading={this.state.loading}/>
+      //                     </>
+      //                 )
+      //             } />
+      //             <Route path="/about" component={About} />
+      //     </Switch>
+      // </BrowserRouter>
       <>
-        <Navbar />
-        <Alert alert= {this.state.alert}/>
-        <Search
-          searchUsers={this.searchUsers}
-          clearUsers={this.clearUsers}
-          showClearButton={this.state.users.length > 0 ? true : false}
-          setAlert={this.setAlert}
-        />
-        <Users users={this.state.users} loading={this.state.loading} />
-      </>
+      <Navbar />
+      <Alert alert= {this.state.alert}/>
+      <Search
+        searchUsers={this.searchUsers}
+        clearUsers={this.clearUsers}
+        showClearButton={this.state.users.length > 0 ? true : false}
+        setAlert={this.setAlert}
+      />
+      <Users users={this.state.users} loading={this.state.loading} />
+    </>
     );
   }
 }
