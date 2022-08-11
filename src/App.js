@@ -7,7 +7,7 @@ import axios from "axios";
 import Search from "./Components/Search";
 import Alert from "./Components/Alert";
 import About from "./Components/About";
-import NewTestComponetn from "./Components/NewTestComponetn";
+import HomePage from "./Components/HomePage";
 
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
@@ -38,6 +38,7 @@ export class App extends Component {
   //       .then((res) => this.setState({ users: res.data, loading: false }));
   //   }, 3000);
   // }
+  
   getUser(username) {
     this.setState({ loading: true });
     setTimeout(() => {
@@ -79,7 +80,7 @@ export class App extends Component {
           <Route
             path="/HomePage"
             element={
-              <NewTestComponetn
+              <HomePage
                 searchUsers={this.searchUsers}
                 clearUsers={this.clearUsers}
                 showClearButton={this.state.users.length > 0 ? true : false}
