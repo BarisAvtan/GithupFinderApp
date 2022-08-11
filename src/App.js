@@ -7,8 +7,9 @@ import axios from "axios";
 import Search from "./Components/Search";
 import Alert from "./Components/Alert";
 import About from "./Components/About";
+import NewTestComponetn from "./Components/NewTestComponetn";
 
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 export class App extends Component {
   constructor(props) {
@@ -16,13 +17,15 @@ export class App extends Component {
     this.searchUsers = this.searchUsers.bind(this);
     this.clearUsers = this.clearUsers.bind(this);
     this.setAlert = this.setAlert.bind(this);
+    this.getUser = this.getUser.bind(this);
     this.state = {
       loading: false,
       users: [],
+      user: {},
       alert: null,
     };
   }
-
+  //Sayfa yüklendiğinde 30 kayıt göstermek için componentDidMount metonu açın.
   // componentDidMount() {
   //   // axios
   //   // .get('https://api.github.com/users')
@@ -35,7 +38,14 @@ export class App extends Component {
   //       .then((res) => this.setState({ users: res.data, loading: false }));
   //   }, 3000);
   // }
-
+  getUser(username) {
+    this.setState({ loading: true });
+    setTimeout(() => {
+      axios
+        .get(`https://api.github.com/users/${username}`)
+        .then((res) => this.setState({ user: res.data, loading: false }));
+    }, 1000);
+  }
 
   searchUsers(keyword) {
     this.setState({ loading: true });
@@ -62,81 +72,25 @@ export class App extends Component {
 
   render() {
     return (
-    
-        // <BrowserRouter>
-        //    <Navbar />
-        //   <Routes>
-        //     {/* <Route path="/" element={<Navigate to="/About" />} /> */}
-        //     {/* <Route exact path="/About" element={<About />}></Route> */}
-        //     <Route
-        //       exact
-        //       path="/Test"
-        //       render={(props) => (
-        //         <>
-        //           <Search
-        //             searchUsers={this.searchUsers}
-        //             clearUsers={this.clearUsers}
-        //             showClearButton={this.state.users.length > 0 ? true : false}
-        //             setAlert={this.setAlert}
-        //           />
-        //           <Users
-        //             users={this.state.users}
-        //             loading={this.state.loading}
-        //           />
-        //         </>
-        //       )}
-        //     />
-        //   </Routes>
-        // </BrowserRouter>
-
-
-      //   <BrowserRouter>
-      //    <Navbar />
-      //   <Route exact path="/" render={ props=> (
-      //                   <>
-      //                       <Search
-      //                           searchUsers={this.searchUsers}
-      //                           clearUsers={this.clearUsers}
-      //                           showClearButton = {this.state.users.length > 0? true:false}
-      //                           setAlert={this.setAlert}
-      //                           />
-      //                       <Users users={this.state.users} loading={this.state.loading}/>
-      //                   </>
-      //               )
-      //           } />
-      //           <Route path="/about" component={About} />
-      // </BrowserRouter>
-
-      //     <BrowserRouter>
-      //     <Navbar />
-      //     <Alert alert= {this.state.alert}/>
-      //     <Switch>
-      //             <Route exact path="/" render={ props=> (
-      //                     <>
-      //                         <Search
-      //                             searchUsers={this.searchUsers}
-      //                             clearUsers={this.clearUsers}
-      //                             showClearButton = {this.state.users.length > 0? true:false}
-      //                             setAlert={this.setAlert}
-      //                             />
-      //                         <Users users={this.state.users} loading={this.state.loading}/>
-      //                     </>
-      //                 )
-      //             } />
-      //             <Route path="/about" component={About} />
-      //     </Switch>
-      // </BrowserRouter>
-      <>
-      <Navbar />
-      <Alert alert= {this.state.alert}/>
-      <Search
-        searchUsers={this.searchUsers}
-        clearUsers={this.clearUsers}
-        showClearButton={this.state.users.length > 0 ? true : false}
-        setAlert={this.setAlert}
-      />
-      <Users users={this.state.users} loading={this.state.loading} />
-    </>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route exact path="/About" element={<About />}></Route>
+          <Route
+            path="/HomePage"
+            element={
+              <NewTestComponetn
+                searchUsers={this.searchUsers}
+                clearUsers={this.clearUsers}
+                showClearButton={this.state.users.length > 0 ? true : false}
+                setAlert={this.setAlert}
+                users={this.state.users} 
+                loading={this.state.loading}
+              />
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     );
   }
 }
