@@ -1,34 +1,65 @@
-import React from "react";
-import {useParams} from "react-router-dom";
-import axios from "axios";
-import {useState, useEffect} from 'react';
+import React, { useEffect } from 'react'
+import Loading from './Loading'
+import Repos from './Repos'
 
-// this.state = {
-//   user: {}
-// };
-// const [username] = useState(0);
+const UserDetails = ( { getUser,getUserRepos, match, loading, repos, user } ) =>  {
 
+    useEffect(()=> {
+        getUser(match.params.login);
+        getUserRepos(match.params.login);
+    }, [])
 
-const getUserInfo = (userName) => {
-  setTimeout(() => {
-    axios
-      .get(`https://api.github.com/users/${userName}`)
-      .then((res) => this.setState({ user: res.data, loading: false }));
-  }, 1000);
+    const {name,avatar_url,location,html_url,bio,blog,followers,following,public_repos} = user;
 
+    if(loading) return <Loading />
+
+    return (
+        <div className="container my-3">
+            <div className="row">
+                <div className="col-md-3">
+                    <div className="card">
+                    <img src={avatar_url} className="card-img-top"/>
+                    <div className="card-body">
+                        <p className="card-text">{ name }</p>
+                        <p><i className="fas fa-map-marker-alt"></i> {location}</p>
+                        <p>
+                            <a className="btn btn-block btn-primary btn-sm" href={html_url}>Github Profile</a>
+                        </p>
+                    </div>
+                    </div>
+                </div>
+                <div className="col-md-9">
+                    <div className="card">
+                        <div className="card-body">
+                            {
+                                bio && 
+                                    <>
+                                        <h3>About</h3>
+                                        <p>{bio}</p>
+                                    </>
+                            }
+                            {
+                                blog && 
+                                    <>
+                                        <h3>Blog</h3>
+                                        <p>{blog}</p>
+                                    </>
+                            }
+                            <div>
+                                <span className="badge badge-primary m-1">Followers: {followers}</span>
+                                <span className="badge badge-danger m-1">Following: {following}</span>
+                                <span className="badge badge-success m-1">Repos: {public_repos}</span>
+                            </div>
+                        </div>
+                        <ul className="list-group list-group-flush">
+                            <Repos repos={repos} />
+                        </ul> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
 
-const UserDetails = (props) => {
 
-  const {login} =useParams();
-  //console.log(login);
-  var userName =  {login}
-  console.log(userName);
-  return <>
-   getUser={userName}
-  
-  </>;
-
-};
-
-export default UserDetails;
+export default UserDetails
