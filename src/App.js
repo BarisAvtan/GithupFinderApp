@@ -1,13 +1,10 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./Components/Navbar";
 import React, { Component, Fragment } from "react";
-import Users from "./Components/Users";
 import axios from "axios";
-import Search from "./Components/Search";
-import Alert from "./Components/Alert";
 import About from "./Components/About";
 import HomePage from "./Components/HomePage";
+import UserDetails from "./Components/UserDetails";
 
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
@@ -26,26 +23,17 @@ export class App extends Component {
     };
   }
   //Sayfa yüklendiğinde 30 kayıt göstermek için componentDidMount metonu açın.
-  // componentDidMount() {
-  //   // axios
-  //   // .get('https://api.github.com/users')
-  //   // .then(res => console.log(res.data));
-  //   this.setState({ loading: true });
-
-  //   setTimeout(() => {
-  //     axios
-  //       .get("https://api.github.com/users")
-  //       .then((res) => this.setState({ users: res.data, loading: false }));
-  //   }, 3000);
-  // }
-  
-  getUser(username) {
+  componentDidMount() {
+    // axios
+    // .get('https://api.github.com/users')
+    // .then(res => console.log(res.data));
     this.setState({ loading: true });
+
     setTimeout(() => {
       axios
-        .get(`https://api.github.com/users/${username}`)
-        .then((res) => this.setState({ user: res.data, loading: false }));
-    }, 1000);
+        .get("https://api.github.com/users")
+        .then((res) => this.setState({ users: res.data, loading: false }));
+    }, 3000);
   }
 
   searchUsers(keyword) {
@@ -56,6 +44,15 @@ export class App extends Component {
         .then((res) =>
           this.setState({ users: res.data.items, loading: false })
         );
+    }, 1000);
+  }
+
+  getUser(username) {
+    this.setState({ loading: true });
+    setTimeout(() => {
+      axios
+        .get(`https://api.github.com/users/${username}`)
+        .then((res) => this.setState({ user: res.data, loading: false }));
     }, 1000);
   }
 
@@ -85,8 +82,17 @@ export class App extends Component {
                 clearUsers={this.clearUsers}
                 showClearButton={this.state.users.length > 0 ? true : false}
                 setAlert={this.setAlert}
-                users={this.state.users} 
+                users={this.state.users}
                 loading={this.state.loading}
+              />
+            }
+          />
+          <Route
+            path="/user/:login"
+            element={
+              <UserDetails
+                getUser={this.getUser}
+                user={this.state.user}
               />
             }
           />
